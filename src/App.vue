@@ -1,26 +1,35 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <ArtGalleryHeader />
+  <ArtsList :artsList = artsList />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import ArtGalleryHeader from "./components/ArtGalleryHeader.vue";
+  import ArtsList from "./components/ArtsList.vue";
 
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
+  export default{
+    name: "App",
+    components:{
+      ArtGalleryHeader,
+      ArtsList
+    },
+    data(){
+      return{
+        artsList:[]
+      }
+    },
+    methods:{
+      async fetchArtsList(){
+        const response = await fetch("http://localhost:4042/api");
+        const artsData = await response.json();
+        return artsData[0].arts;
+      },
+    },
+    async created(){
+      this.artsList = await this.fetchArtsList();
+    }
   }
-}
 </script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style scoped>
 </style>
