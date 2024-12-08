@@ -20,7 +20,7 @@
     },
     methods:{
       async fetchArtsList(){
-        const response = await fetch("http://localhost:4042/api");
+        const response = await fetch("https://ganesh-node.onrender.com/api");
         const artsData = await response.json();
         return artsData[0].arts;
       },
